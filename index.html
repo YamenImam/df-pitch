@@ -245,7 +245,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 
 .chat-window {
   position: fixed; bottom: 165px; right: 30px; z-index: 999;
-  width: 350px; height: 450px; background: white;
+  width: 360px; height: 480px; background: white;
   border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 12px 40px rgba(0,0,0,0.15);
   display: flex; flex-direction: column; overflow: hidden;
   transform: translateY(30px); opacity: 0; pointer-events: none;
@@ -265,12 +265,13 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
   flex: 1; padding: 16px; overflow-y: auto; background: var(--off);
   display: flex; flex-direction: column; gap: 12px;
 }
-.msg { max-width: 80%; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; line-height: 1.4; }
+.msg { max-width: 85%; padding: 10px 14px; border-radius: 8px; font-size: 0.88rem; line-height: 1.45; }
 .msg.ai { background: var(--mid); color: var(--dark); align-self: flex-start; border-top-left-radius: 2px; }
 .msg.user { background: var(--red); color: white; align-self: flex-end; border-top-right-radius: 2px; }
+.msg.system-search { background: rgba(0, 86, 179, 0.08); color: #0056b3; align-self: center; text-align: center; font-size: 0.75rem; border: 1px dashed rgba(0, 86, 179, 0.2); font-weight: 600; width: 90%; max-width: 90%; }
 
 .chat-input-area { padding: 12px; background: white; border-top: 1px solid var(--border); display: flex; gap: 8px; }
-.chat-input { flex: 1; border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 0.85rem; outline: none; }
+.chat-input { flex: 1; border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 0.88rem; outline: none; }
 .chat-input:focus { border-color: var(--red); }
 .chat-send { background: var(--dark); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem; }
 .chat-send:hover { background: var(--red); }
@@ -401,7 +402,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
         <div class="ucard">
           <div class="uc-plat">🛒 felgenshop.de</div>
           <div class="uc-title">SEO-Produktbeschreibungen skalieren</div>
-          <div class="uc-desc">Hunderte Felgen & Fahrwerke brauchen einzigartige, SEO-optimierte Beschreibungen.</div>
+          <div class="uc-desc">Hunderte Felgen & Fahrwerke brauchen einzigartige, SEO-optimierte Beschريبungen.</div>
           <div class="uc-steps">
             <div class="uc-step"><div class="uc-dot"></div><div>Produkt-CSV mit Specs als Input</div></div>
             <div class="uc-step"><div class="uc-dot"></div><div>KI generiert Titel, Kurzbeschreibung, Bullets</div></div>
@@ -489,10 +490,10 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
     <button class="chat-close" onclick="toggleChat()">✕</button>
   </div>
   <div class="chat-messages" id="chatMsgs">
-    <div class="msg ai">Hallo! Ich bin Yamens KI-Assistent. Fragen Sie mich etwas über Automatisierung bei DF Automotive oder felgenshop.de! 🚀</div>
+    <div class="msg ai">Hallo! Fragen Sie mich über Automatisierung oder nennen Sie mir Ihr Automodell, um passende Felgen zu finden! 🏎️💨<br><br>مرحباً! اسألني عن أتمتة العمليات، أو اذكر لي نوع سيارتك لأجد لك الإطارات والجنطات المناسبة فوراً!</div>
   </div>
   <div class="chat-input-area">
-    <input type="text" class="chat-input" id="chatIn" placeholder="Frage eingeben..." onkeypress="handleKey(event)">
+    <input type="text" class="chat-input" id="chatIn" placeholder="Frage eingeben / اكتب سؤالك هنا..." onkeypress="handleKey(event)">
     <button class="chat-send" onclick="sendMsg()">Senden</button>
   </div>
 </div>
@@ -544,7 +545,7 @@ document.addEventListener('keydown', e=>{
 setTimeout(()=>khint.classList.add('gone'), 5000);
 go(0);
 
-/* AI CHAT LOGIC ENGINE */
+/* AI CHAT LOGIC ENGINE WITH AUTOMOTIVE SEARCH CAR SIMULATOR */
 function toggleChat() {
   document.getElementById('chatWin').classList.toggle('open');
 }
@@ -558,19 +559,46 @@ function sendMsg() {
   const text = input.value.trim();
   if(!text) return;
 
-  // Add User Message
+  // 1. Add User Message
   appendMessage(text, 'user');
   input.value = '';
 
-  // Add Typing Indicator
-  const typingId = appendTyping();
+  // 2. Check if the question is about cars to simulate live database search
+  const isArabic = /[\u0600-\u06FF]/.test(text);
+  const lowerText = text.toLowerCase();
+  let detectedCar = null;
+  
+  const cars = ['golf', 'audi', 'bmw', 'mercedes', 'porsche', 'tesla', 'vw', 'سيارة', 'سيارتي'];
+  cars.forEach(c => { if(lowerText.includes(c)) detectedCar = c; });
 
-  // Logic Responses Simulation
-  setTimeout(() => {
-    removeTyping(typingId);
-    const reply = getAIResponse(text);
-    appendMessage(reply, 'ai');
-  }, 1200);
+  if (detectedCar) {
+    // Phase 1: Typing indicator
+    const typingId = appendTyping();
+    
+    setTimeout(() => {
+      removeTyping();
+      // Phase 2: Live Search Feedback
+      const searchTxt = isArabic ? `🔍 جاري الاتصال بـ felgenshop.de والبحث عن أحدث الإطارات المتوافقة...` : `🔍 Durchsuche felgenshop.de Live-Datenbank nach passenden Kompatibilitäten...`;
+      appendMessage(searchTxt, 'system-search');
+      
+      // Phase 3: Final Answer after search
+      const finalTyping = appendTyping();
+      setTimeout(() => {
+        removeTyping();
+        const reply = getAutomotiveResponse(lowerText, isArabic);
+        appendMessage(reply, 'ai');
+      }, 1500);
+      
+    }, 1000);
+  } else {
+    // Standard normal response
+    appendTyping();
+    setTimeout(() => {
+      removeTyping();
+      const reply = getGeneralResponse(lowerText, isArabic);
+      appendMessage(reply, 'ai');
+    }, 1200);
+  }
 }
 
 function appendMessage(text, sender) {
@@ -590,7 +618,6 @@ function appendTyping() {
   el.innerHTML = '<div class="typing-dots"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>';
   container.appendChild(el);
   container.scrollTop = container.scrollHeight;
-  return el.id;
 }
 
 function removeTyping() {
@@ -598,24 +625,63 @@ function removeTyping() {
   if(el) el.remove();
 }
 
-function getAIResponse(q) {
-  q = q.toLowerCase();
-  if(q.includes('hallo') || q.includes('hi') || q.includes('moin')) {
-    return "Moin! Wie kann ich dir heute bei der Automatisierung helfen? 🔧";
+/* CAR CONFIGURATOR SIMULATOR DATABASE */
+function getAutomotiveResponse(q, isArabic) {
+  if (isArabic) {
+    if (q.includes('golf') || q.includes('vw')) {
+      return "✅ تم العثور على التوافق التام لسيارات (VW Golf):\n\nأنسب إطارات وجنطات لها هي مقاس 18 أو 19 بوصة (Zoll). نوصي بتركيب جنطات BBS CH-R أو الـ Ultra Wheels مع إطارات رياضية مقاس 225/40 R18 لضمان أعلى ثبات وأداء رياضي متكامل! 🏎️";
+    }
+    if (q.includes('bmw')) {
+      return "✅ تم العثور على التوافق التام لسيارات (BMW):\n\nالفئات الرياضية يناسبها جنطات مقاس 19 إلى 20 بوصة (Zoll). الماركات الأكثر طلباً على متجرنا هي جنطات Tomason أو Borbet مع إطارات Michelin Pilot Sport 4S لتوفير تجربة قيادة ديناميكية مثالية! 🔧";
+    }
+    if (q.includes('audi')) {
+      return "✅ تم العثور على التوافق لسيارات (Audi):\n\nأنسب مقاس لها هو 19 بوصة. جنطات Rotiform أو Wheelworld مع إطارات Continental SportContact تعطي مظهراً فخماً وتوافقاً ميكانيكياً 100% مع نظام التعليق الخاص بأودي.";
+    }
+    if (q.includes('tesla')) {
+      return "✅ تم العثور على التوافق لسيارات (Tesla):\n\nنظراً للوزن الثابت وعزم الدوران العالي للسيارات الكهربائية، نوصي بجنطات مقاس 19 أو 20 بوصة خفيفة الوزن (Aero-optimized) مثل جنطات Rial Lugano مع إطارات مخصصة للمركبات الكهربائية لتقليل استهلاك البطارية وصوت الطريق.";
+    }
+    return "✅ بحث الإنترنت المباشر:\n\nلقد عثرت على توافقات ممتازة لسيارتك! المقاسات القياسية الآمنة تتراوح بين 17 و 19 بوصة. يمكنك الاختيار من ماركات عالمية مثل Borbet أو BBS المتوفرة في مستودعاتنا في فلينسبورغ بشكل فوري! 🚗⚙️";
+  } else {
+    // German responses
+    if (q.includes('golf') || q.includes('vw')) {
+      return "✅ Passende Felgen für VW Golf gefunden:\n\nOptimal sind 18 oder 19 Zoll Felgen. Wir empfehlen die BBS CH-R oder Ultra Wheels kombiniert mit Breitreifen (225/40 R18) für die perfekte sportliche Optik und maximalen Grip! 🏎️";
+    }
+    if (q.includes('bmw')) {
+      return "✅ Passende Felgen für BMW gefunden:\n\nFür sportliche BMW-Modelle empfehlen wir 19 bis 20 Zoll Felgen von Tomason oder Borbet, gepaart mit Michelin Pilot Sport 4S Reifen für maximale Dynamik auf der Straße! 🔧";
+    }
+    if (q.includes('tesla')) {
+      return "✅ Passende Felgen für Tesla gefunden:\n\nAufgrund des hohen Drehmoments empfehlen wir gewichtsoptimierte 19 oder 20 Zoll Felgen wie die Rial Lugano, kombiniert mit EV-spezifischen Reifen, um die Reichweite zu maximieren.";
+    }
+    return "✅ Live-Suche erfolgreich:\n\nFür dieses Fahrzeugmodell sind Felgengrößen von 17 bis 19 Zoll im felgenshop.de System freigegeben. Marken wie Borbet, MAM oder Rial passen perfekt ohne Karosseriearbeiten! 🚗";
   }
-  if(q.includes('tiktok') || q.includes('social') || q.includes('instagram')) {
-    return "Mit n8n & OpenAi können wir Produktdaten vollautomatisch in fertige TikTok-Captions umwandeln. Das spart 85% der manuellen Erstellungszeit! 🎵";
+}
+
+/* GENERAL RESPONSES ENGINE */
+function getGeneralResponse(q, isArabic) {
+  if (isArabic) {
+    if(q.includes('اهلاً') || q.includes('مرحبا') || q.includes('سلام')) {
+      return "أهلاً بك! أنا مساعد يامن الذكي. اكتب لي اسم سيارتك (مثال: Golf أو BMW) لأبحث لك عن الإطارات المناسبة، أو اسألني عن مشروع الأتمتة! 🚀";
+    }
+    if(q.includes('تيك توك') || q.includes('محتوى') || q.includes('سوشيال')) {
+      return "باستخدام أدوات مثل n8n و الـ AI، يمكن ليامن تحويل بيانات المتجر إلى نصوص وفيديوهات تيك توك تلقائياً خلال 1.2 ثانية فقط وبدون أي تكلفة إضافية! 🎵";
+    }
+    if(q.includes('يامن')) {
+      return "يامن مبرمج ومطور هذه المنصة، وهو جاهز تماماً لتطبيق هذه الأنظمة والبرمجيات كطالب متدرب (Werkstudent) لدى DF Automotive وتوفير 80% من وقت الموظفين! 🧠";
+    }
+    return "سؤال رائع! هذا بالتحديد ما يمكن لأتمتة العمليات والذكاء الاصطناعي معالجته لتقليص الأخطاء اليدوية وتوفير الوقت والمصاريف لدى الشركة. 🤖⚙️";
+  } else {
+    // German General
+    if(q.includes('hallo') || q.includes('hi') || q.includes('moin')) {
+      return "Moin! Ich bin Yamens KI-Assistent. Nennen Sie mir ein Automodell (z.B. Golf, BMW), um passende Reifen zu finden, oder fragen Sie mich nach der Automatisierung! 🔧";
+    }
+    if(q.includes('tiktok') || q.includes('social')) {
+      return "Mit n8n und der OpenAI-API können wir Shop-Produktdaten vollautomatisch in fertige TikTok-Captions transformieren. Zeitersparnis: 85%! 🎵";
+    }
+    if(q.includes('yamen')) {
+      return "Yamen ist bereit, diese intelligenten Workflows direkt als Werkstudent bei DF Automotive einzuführen, um Routineaufgaben komplett zu eliminieren! 🚀";
+    }
+    return "Gute Frage! Genau solche komplexen Workflows optimieren wir mithilfe von n8n, Make und maßgeschneiderten KI-Prompts. 🤖⚙️";
   }
-  if(q.includes('felgen') || q.includes('kompatibilität') || q.includes('felgenshop')) {
-    return "Stell dir vor: Eine KI, die Kompatibilitätsdaten liest und Kundenfragen wie 'Passt das auf meinen Golf?' vollautomatisch in 30 Sekunden beantwortet! 🏎️";
-  }
-  if(q.includes('zeit') || q.includes('vorteil') || q.includes('impact')) {
-    return "Wir eliminieren stumpfe Routineaufgaben. Das Ergebnis: Bis zu 80% Zeitersparnis bei SEO-Texten und Datenberichten! 📊";
-  }
-  if(q.includes('yamen')) {
-    return "Yamen ist bereit, diese Workflows direkt als Werkstudent bei DF Automotive zu implementieren und eure Systeme auf das nächste Level zu bringen! 🚀";
-  }
-  return "Das ist eine gute Frage! Genau solche komplexen Prozesse können wir mithilfe maßgeschneiderter KI-Prompts und Automatisierungstools effizient lösen. 🤖⚙️";
 }
 </script>
 </body>
