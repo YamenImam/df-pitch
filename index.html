@@ -299,9 +299,13 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 .tdot:nth-child(2) { animation-delay: -0.16s; }
 @keyframes tBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
+/* ─── RESPONSIVE STYLES (UPDATED FOR SCROLL PROBLEM) ─── */
 @media (max-width: 860px) {
   .topbar, .bottom-nav { padding: 0 20px; }
-  .slide-inner { padding: 90px 20px 90px !important; }
+  
+  /* الحل المعتمد: رفع مساحة الأمان السفلية لـ 180px لحل مشكلة السكرول على الجوال نهائياً */
+  .slide-inner { padding: 90px 20px 180px !important; }
+  
   #s1 .slide-inner { grid-template-columns: 1fr; gap: 30px; }
   .hero-cards { display: none; }
   .psteps { grid-template-columns: 1fr; gap: 10px; }
@@ -316,6 +320,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 </head>
 <body>
 
+<!-- TOP BAR -->
 <div class="topbar">
   <div class="logo-area">
     <div class="logo-df-box">DF AUTOMOTIVE</div>
@@ -326,12 +331,15 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
   <div class="prog-container"><div class="prog-fill" id="pbar"></div></div>
 </div>
 
+<!-- KEYBOARD HINT -->
 <div class="khint" id="khint">
   <span class="k">←</span><span class="k">→</span> Nutzen Sie die Pfeiltasten
 </div>
 
+<!-- SLIDES WRAPPER -->
 <div class="slides-wrapper" id="sw">
 
+  <!-- S1: HERO -->
   <div class="slide" id="s1">
     <div class="slide-inner">
       <div>
@@ -346,13 +354,14 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
       </div>
       <div class="hero-cards fu">
         <div class="hcard"><div class="hcard-ic">🎵</div><div><div class="hcard-t">TikTok Content automatisieren</div><div class="hcard-d">Neues Produkt → KI generiert Caption, Hook & Hashtags in Sekunden</div></div></div>
-        <div class="hcard"><div class="hcard-ic">🛒</div><div><div class="hcard-t">SEO-Produkttexte skalieren</div><div class="hcard-d">500+ Products mit einzigartigen Beschreibungen in einer Stunde</div></div></div>
+        <div class="hcard"><div class="hcard-ic">🛒</div><div><div class="hcard-t">SEO-Produkttexte skalieren</div><div class="hcard-d">500+ Produkte mit einzigartigen Beschreibungen in einer Stunde</div></div></div>
         <div class="hcard"><div class="hcard-ic">💬</div><div><div class="hcard-t">Kundenservice mit KI</div><div class="hcard-d">Kompatibilitätsfragen automatisch beantworten — 24/7</div></div></div>
         <div class="hcard"><div class="hcard-ic">📊</div><div><div class="hcard-t">Daten & Reporting</div><div class="hcard-d">Automatische Berichte, Preismonitoring & Marktanalyse</div></div></div>
       </div>
     </div>
   </div>
 
+  <!-- S2: PROZESS -->
   <div class="slide" id="s2">
     <div class="slide-inner">
       <div class="slide-tag fu">Schritt für Schritt</div>
@@ -398,6 +407,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
     </div>
   </div>
 
+  <!-- S3: USE CASES -->
   <div class="slide" id="s3">
     <div class="slide-inner">
       <div class="slide-tag fu">Konkrete Ideen</div>
@@ -443,6 +453,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
     </div>
   </div>
 
+  <!-- S4: DEMO -->
   <div class="slide" id="s4">
     <div class="slide-inner">
       <div class="slide-tag fu">Live Beispiel</div>
@@ -499,6 +510,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 
 </div>
 
+<!-- AI CHAT SYSTEM INTERFACE -->
 <button class="ai-chat-btn" onclick="toggleChat()">🤖</button>
 <div class="chat-window" id="chatWin">
   <div class="chat-header">
@@ -521,6 +533,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
   </div>
 </div>
 
+<!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <div class="section-dots" id="sdots">
     <button class="sdot active" onclick="go(0)"><span class="sdot-label">Start</span></button>
@@ -613,18 +626,15 @@ function sendMsg() {
   processAutomotiveQuery(text);
 }
 
-/* HIGHLY RELEVANT INTERNET OCR SIMULATOR */
 function simulateFahrzeugscheinUpload(inputEl) {
   if (!inputEl.files || !inputEl.files[0]) return;
   const fileName = inputEl.files[0].name;
   
-  // Show file upload card in chat
   const uploadBubbleText = currentLang === 'en' 
     ? `📎 Uploaded Document: ${fileName}` 
     : `📎 Hochgeladenes Dokument: ${fileName}`;
   appendMessage(uploadBubbleText, 'user');
 
-  // Trigger scanning workflow simulator
   appendTyping();
   setTimeout(() => {
     removeTyping();
@@ -636,12 +646,10 @@ function simulateFahrzeugscheinUpload(inputEl) {
     appendTyping();
     setTimeout(() => {
       removeTyping();
-      // Simulate that the AI found "Audi A5 Sportback" from the HSN/TSN code
       const detectedVehicle = "Audi A5 Sportback (HSN: 0588 / TSN: BHI)";
       const reply = getCarModelSpecificResponse(detectedVehicle, 'audi');
       appendMessage(reply, 'ai');
 
-      // Send the productivity optimization message
       setTimeout(() => {
         sendAutomationEfficiencyNotice();
       }, 1200);
@@ -711,7 +719,6 @@ function removeTyping() {
   if(el) el.remove();
 }
 
-/* NEW COST & EFFICIENCY SAVING NOTIFICATION BLOCK */
 function sendAutomationEfficiencyNotice() {
   let notice = "";
   if (currentLang === 'en') {
@@ -722,7 +729,6 @@ function sendAutomationEfficiencyNotice() {
   appendMessage(notice, 'ai');
 }
 
-/* CAR TYPE AND MODEL SPECIFIC INTELLIGENT SIMULATOR */
 function getCarModelSpecificResponse(modelInput, brand) {
   const formattedModel = modelInput.replace(/\b\w/g, c => c.toUpperCase());
   
@@ -739,7 +745,6 @@ function getCarModelSpecificResponse(modelInput, brand) {
   }
 }
 
-/* GENERAL KNOWLEDGE WORKFLOW ENGINE */
 function getGeneralSystemResponse(q) {
   if (currentLang === 'en') {
     if(q.includes('hallo') || q.includes('hi') || q.includes('hello')) {
