@@ -168,7 +168,6 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 /* ─── S2: PROZESS ─── */
 #s2 { background: var(--off); }
 .psteps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 32px; }
-.psteps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 32px; }
 .pstep { padding: 22px 16px; border: 1px solid var(--border); border-radius: 8px; background: var(--white); box-shadow: var(--shadow); }
 .pstep-n { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2rem; color: var(--mid); line-height: 1; margin-bottom: 8px; display: block; }
 .pstep-ic { font-size: 1.4rem; margin-bottom: 8px; }
@@ -274,6 +273,11 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 .msg.user { background: var(--red); color: white; align-self: flex-end; border-top-right-radius: 2px; }
 .msg.system-search { background: rgba(0, 86, 179, 0.06); color: #0056b3; align-self: center; text-align: center; font-size: 0.78rem; border: 1px dashed rgba(0, 86, 179, 0.2); font-weight: 600; width: 95%; max-width: 95%; border-radius: 6px; padding: 8px; }
 
+/* Interactive Followup Option Buttons Style */
+.chat-options-block { display: flex; gap: 8px; margin-top: 4px; align-self: flex-start; width: 100%; padding-left: 4px; }
+.opt-btn { background: white; border: 1px solid var(--red); color: var(--red); padding: 6px 16px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.opt-btn:hover { background: var(--red); color: white; box-shadow: 0 4px 10px rgba(232,0,29,0.2); }
+
 /* Interactive Rating Card Style */
 .rating-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px; width: 100%; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow); margin-top: 4px; }
 .rating-title { font-weight: 700; font-size: 0.85rem; color: var(--dark); }
@@ -332,6 +336,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 </head>
 <body>
 
+<!-- TOP BAR -->
 <div class="topbar">
   <div class="logo-area">
     <div class="logo-df-box">DF AUTOMOTIVE</div>
@@ -342,12 +347,15 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
   <div class="prog-container"><div class="prog-fill" id="pbar"></div></div>
 </div>
 
+<!-- KEYBOARD HINT -->
 <div class="khint" id="khint">
   <span class="k">←</span><span class="k">→</span> Nutzen Sie die Pfeiltasten
 </div>
 
+<!-- SLIDES WRAPPER -->
 <div class="slides-wrapper" id="sw">
 
+  <!-- S1: HERO -->
   <div class="slide" id="s1">
     <div class="slide-inner">
       <div>
@@ -369,6 +377,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
     </div>
   </div>
 
+  <!-- S2: PROZESS -->
   <div class="slide" id="s2">
     <div class="slide-inner">
       <div class="slide-tag fu">Schritt für Schritt</div>
@@ -414,6 +423,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
     </div>
   </div>
 
+  <!-- S3: USE CASES -->
   <div class="slide" id="s3">
     <div class="slide-inner">
       <div class="slide-tag fu">Konkrete Ideen</div>
@@ -459,6 +469,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
     </div>
   </div>
 
+  <!-- S4: DEMO -->
   <div class="slide" id="s4">
     <div class="slide-inner">
       <div class="slide-tag fu">Live Beispiel</div>
@@ -519,6 +530,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 
 </div>
 
+<!-- AI CHAT SYSTEM INTERFACE -->
 <button class="ai-chat-btn" onclick="toggleChat()">🤖</button>
 <div class="chat-window" id="chatWin">
   <div class="chat-header">
@@ -541,6 +553,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
   </div>
 </div>
 
+<!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <div class="section-dots" id="sdots">
     <button class="sdot active" onclick="go(0)"><span class="sdot-label">Start</span></button>
@@ -569,7 +582,7 @@ const khint = document.getElementById('khint');
 function go(n) {
   n = Math.max(0, Math.min(N-1, n));
   cur = n;
-  sw.style.transform = `translateX(-${cur * 100}vw)`;
+  sw.style.transform = `translateX(-${cur * 10}vw)`;
   slides.forEach((s,i) => { s.scrollTop = 0; });
   dots.forEach((d,i) => d.classList.toggle('active', i===cur));
   slides.forEach((s,i) => { if(i===cur) setTimeout(()=>s.classList.add('in'),60); else s.classList.remove('in'); });
@@ -588,7 +601,7 @@ document.addEventListener('keydown', e=>{
 setTimeout(()=>khint.classList.add('gone'), 5000);
 go(0);
 
-/* AI CHAT LOGIC ENGINE - UPDATED WITH TIKTOK COMMENT AUTOMATION */
+/* AI CHAT LOGIC ENGINE - DYNAMIC CONVERSATION AND CONDITIONAL RATING FLOW */
 let currentLang = null;
 let selectedStars = 0;
 
@@ -628,6 +641,9 @@ function sendMsg() {
   const text = input.value.trim();
   if(!text) return;
 
+  // Clear any existing conditional question buttons if user types manually
+  removeOptionsBlock();
+
   appendMessage(text, 'user');
   input.value = '';
 
@@ -637,6 +653,8 @@ function sendMsg() {
 function simulateFahrzeugscheinUpload(inputEl) {
   if (!inputEl.files || !inputEl.files[0]) return;
   const fileName = inputEl.files[0].name;
+  
+  removeOptionsBlock();
   
   const uploadBubbleText = currentLang === 'en' ? `📎 Uploaded Document: ${fileName}` : `📎 Hochgeladenes Dokument: ${fileName}`;
   appendMessage(uploadBubbleText, 'user');
@@ -658,8 +676,9 @@ function simulateFahrzeugscheinUpload(inputEl) {
 
       setTimeout(() => {
         sendAutomationEfficiencyNotice();
-        setTimeout(appendRatingCard, 1500);
-      }, 1200);
+        // ASKS CUSTOMER IF THEY HAVE MORE QUESTIONS (NO RATING CARD YET!)
+        setTimeout(appendFollowUpQuestion, 1200);
+      }, 1000);
 
     }, 2000);
   }, 1000);
@@ -668,7 +687,6 @@ function simulateFahrzeugscheinUpload(inputEl) {
 function processAutomotiveQuery(text) {
   const lowerText = text.toLowerCase();
   
-  // TIKTOK COMMENT AUTOMATION INTERACTION
   if (lowerText.includes('comment') || lowerText.includes('تعليق') || lowerText.includes('tiktok')) {
     appendTyping();
     setTimeout(() => {
@@ -693,7 +711,7 @@ function processAutomotiveQuery(text) {
         appendMessage(commentSim, 'user');
         setTimeout(() => {
           appendMessage(botReply, 'ai');
-          setTimeout(appendRatingCard, 1500);
+          setTimeout(appendFollowUpQuestion, 1200);
         }, 1000);
       }, 1500);
     }, 500);
@@ -722,8 +740,8 @@ function processAutomotiveQuery(text) {
         
         setTimeout(() => {
           sendAutomationEfficiencyNotice();
-          setTimeout(appendRatingCard, 1500);
-        }, 1200);
+          setTimeout(appendFollowUpQuestion, 1200);
+        }, 1000);
       }, 1600);
     }, 900);
   } else {
@@ -732,7 +750,7 @@ function processAutomotiveQuery(text) {
       removeTyping();
       const reply = getGeneralSystemResponse(lowerText);
       appendMessage(reply, 'ai');
-      setTimeout(appendRatingCard, 1500);
+      setTimeout(appendFollowUpQuestion, 1200);
     }, 1100);
   }
 }
@@ -771,6 +789,73 @@ function sendAutomationEfficiencyNotice() {
   appendMessage(notice, 'ai');
 }
 
+/* ─── NEW CONDITIONAL FOLLOW-UP INTERACTION FLOW ─── */
+function appendFollowUpQuestion() {
+  const questionText = currentLang === 'en' 
+    ? "Do you have any other questions or another vehicle to check? 🤔" 
+    : "Haben Sie noch weitere Fragen oder ein anderes Fahrzeug zu prüfen? 🤔";
+    
+  appendMessage(questionText, 'ai');
+  
+  // Render YES / NO interactive buttons block
+  const container = document.getElementById('chatMsgs');
+  const block = document.createElement('div');
+  block.className = 'chat-options-block';
+  block.id = 'live-options-block';
+  
+  const lblYes = currentLang === 'en' ? 'Yes / Continue' : 'Ja / Weiter';
+  const lblNo = currentLang === 'en' ? 'No / Finished' : 'Nein / Fertig';
+  
+  block.innerHTML = `
+    <button class="opt-btn" onclick="handleUserChoice(true)">${lblYes}</button>
+    <button class="opt-btn" onclick="handleUserChoice(false)">${lblNo}</button>
+  `;
+  container.appendChild(block);
+  container.scrollTop = container.scrollHeight;
+}
+
+function removeOptionsBlock() {
+  const block = document.getElementById('live-options-block');
+  if(block) block.remove();
+}
+
+function handleUserChoice(wantsMore) {
+  // Clear the active choice buttons
+  removeOptionsBlock();
+  
+  if (wantsMore) {
+    // User selected YES - Simulate continuing chat
+    const userMsg = currentLang === 'en' ? "Yes, I have more questions." : "Ja, ich habe weitere Fragen.";
+    appendMessage(userMsg, 'user');
+    
+    appendTyping();
+    setTimeout(() => {
+      removeTyping();
+      const aiPrompt = currentLang === 'en'
+        ? "Sure! Please type your next question or attach another vehicle registration document (Fahrzeugschein) 📎"
+        : "Gerne! Bitte geben Sie Ihre nächste Frage ein oder laden Sie einen weiteren Fahrzeugschein hoch 📎";
+      appendMessage(aiPrompt, 'ai');
+    }, 800);
+  } else {
+    // User selected NO - Close loop and pop the stars rating layout!
+    const userMsg = currentLang === 'en' ? "No, thank you." : "Nein, danke. Ich bin fertig.";
+    appendMessage(userMsg, 'user');
+    
+    appendTyping();
+    setTimeout(() => {
+      removeTyping();
+      const thanksText = currentLang === 'en'
+        ? "Thank you for using DF Automotive AI support! Have a safe drive. 🏎️💨"
+        : "Vielen Dank, dass Sie den KI-Support von DF Automotive genutzt haben! Gute Fahrt. 🏎️💨";
+      appendMessage(thanksText, 'ai');
+      
+      // TRIGGER THE STARS CARD AT THE VERY END
+      setTimeout(appendRatingCard, 1000);
+    }, 800);
+  }
+}
+
+/* INTERACTIVE STARS RATING DOM GENERATION */
 function appendRatingCard() {
   const container = document.getElementById('chatMsgs');
   const card = document.createElement('div');
