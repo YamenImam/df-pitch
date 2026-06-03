@@ -41,13 +41,13 @@ body {
 
 .slides-wrapper {
   display: flex;
-  width: 400%; /* 4 Slides = 400% */
+  width: 400%;
   height: 100%;
   transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
 }
 
 .slide {
-  width: 25%; /* Each slide takes exactly 1/4 of the wrapper */
+  width: 25%;
   height: 100%;
   flex-shrink: 0;
   overflow-y: auto;
@@ -234,13 +234,23 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 .vari-lbl { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 0.68rem; text-transform: uppercase; color: var(--red); display: block; margin-bottom: 2px; }
 .vari-lbl.m { color: var(--muted); }
 
-/* LIVE TRENDING BADGE STYLE */
+/* DYNAMIC PRICING MONITOR TABLE VISUALS */
+.price-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 0.78rem; text-align: left; }
+.price-table th, .price-table td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+.price-table th { background: var(--off); color: var(--muted); font-weight: 700; text-transform: uppercase; font-size: 0.68rem; }
+.price-table tr.lowest { background: #e8f5e9; font-weight: 700; color: #2e7d32; }
 .trend-sync-badge { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; padding: 4px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; }
+.smart-price-tag { background: #e8f5e9; color: #2e7d32; padding: 2px 6px; border-radius: 4px; font-weight: 800; font-size: 0.72rem; margin-left: 8px; display: inline-block; }
 
-/* ─── KEYBOARD HINT ─── */
-.khint { position: fixed; bottom: 90px; right: 48px; z-index: 180; background: rgba(255, 255, 255, 0.9); border: 1px solid var(--border); border-radius: 6px; padding: 8px 16px; font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px); }
-.khint.gone { opacity: 0; pointer-events: none; transition: opacity 1s; }
-.k { background: var(--off); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-weight: 700; color: var(--dark); font-size: 0.7rem; }
+/* ─── TOP BAR ─── */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 65px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
 
 /* ─── AI CHAT BOT SYSTEM ─── */
 .ai-chat-btn {
@@ -349,8 +359,10 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 <body>
 
 <div class="main-viewport">
+  <!-- SLIDES WRAPPER -->
   <div class="slides-wrapper" id="sw">
 
+    <!-- S1: HERO -->
     <div class="slide" id="s1">
       <div class="slide-inner">
         <div>
@@ -372,6 +384,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
       </div>
     </div>
 
+    <!-- S2: PROZESS -->
     <div class="slide" id="s2">
       <div class="slide-inner">
         <div class="slide-tag fu">Schritt für Schritt</div>
@@ -417,6 +430,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
       </div>
     </div>
 
+    <!-- S3: USE CASES -->
     <div class="slide" id="s3">
       <div class="slide-inner">
         <div class="slide-tag fu">Konkrete Ideen</div>
@@ -462,10 +476,11 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
       </div>
     </div>
 
+    <!-- S4: DEMO -->
     <div class="slide" id="s4">
       <div class="slide-inner">
         <div class="slide-tag fu">Live Beispiel</div>
-        <h2 class="fu">TikTok-Generator <span class="red">in Aktion</span></h2>
+        <h2 class="fu">TikTok-Generator & <span class="red">Smart Pricing</span></h2>
         <div class="demo-grid fu">
           <div>
             <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;font-weight:700;margin-bottom:12px;">📱 @df.automotive — Generierter Post</div>
@@ -488,6 +503,21 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
                 </div>
               </div>
             </div>
+            
+            <!-- NEW LIVE COMPETITOR PRICE MONITOR CARD -->
+            <div class="dblock" style="margin-top:16px; border-left: 3px solid #ffc107;">
+              <div class="dblock-t">🔍 Competitor Price Scraper <span class="dpill" style="background:#ffc107;color:#000;">Live Feed</span></div>
+              <table class="price-table">
+                <thead>
+                  <tr><th>Shop Name</th><th>Price (BBS CH-R)</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Felgen-Outlet.de</td><td>459,00 €</td><td>Standard</td></tr>
+                  <tr><td>Tuning-Shop-NRW</td><td>449,00 €</td><td>Old Lowest</td></tr>
+                  <tr class="lowest"><td>DF-Automotive (AI Optimized)</td><td>445,00 €</td><td>★ Active Best Price</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <div>
             <div class="dblock">
@@ -496,23 +526,26 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 {<br>
 &nbsp;&nbsp;<span class="ck">"produkt"</span>: <span class="cs">"BBS CH-R"</span>,<br>
 &nbsp;&nbsp;<span class="ck">"groesse"</span>: <span class="cs">"18 Zoll"</span>,<br>
-&nbsp;&nbsp;<span class="ck">"farbe"</span>: <span class="cs">"Satin Black"</span>,<br>
+&nbsp;&nbsp;<span class="ck">"base_price"</span>: <span class="cv">450.00</span>,<br>
 &nbsp;&nbsp;<span class="ck">"lager"</span>: <span class="cv">3</span>,<br>
 &nbsp;&nbsp;<span class="ck">"passend_fuer"</span>: [<span class="cs">"VW Golf"</span>]<br>
 }
               </div>
             </div>
-            <div class="flow-arr"><div class="fl"></div><div class="fi">⚡</div><span>n8n + KI-API</span><div class="fl"></div></div>
+            <div class="flow-arr"><div class="fl"></div><div class="fi">⚡</div><span>n8n Smart Automation</span><div class="fl"></div></div>
             <div class="dblock">
-              <div class="dblock-t">📤 Output <span class="dpill">3 Varianten</span></div>
+              <div class="dblock-t">📤 Output <span class="dpill">AI Repricer & Content</span></div>
               <div class="variants">
                 <div class="vari hot">
-                  <span class="vari-lbl">A — Hype</span>"Diese Felgen machen deinen Golf zum Hingucker 👀 Nur noch 3 Stück auf Lager!"
+                  <span class="vari-lbl">Dynamic Repricing Node</span>
+                  Competitor lowest found: 449€ → Adjusted DF Price to: <strong style="color:#2e7d32;">445,00 €</strong>
+                  <span class="smart-price-tag">Saved -5%</span>
+                </div>
+                <div class="vari">
+                  <span class="vari-lbl">A — Hype Caption</span>"Diese Felgen machen deinen Golf zum Hingucker 👀 Nur noch 3 Stück auf Lager!"
                   <br>
                   <div class="trend-sync-badge">🔥 TikTok Trends Live-Synced: #Tuning #CarTikTok #Felgen2026</div>
                 </div>
-                <div class="vari"><span class="vari-lbl m">B — Info</span>"BBS CH-R 18 Zoll Satin Black — jetzt neu. Passt auf Golf &amp; A3 🔧"</div>
-                <div class="vari"><span class="vari-lbl m">C — Frage</span>"Welche Farbe für deinen VW? 🤔 Wir haben die Antwort in Flensburg."</div>
               </div>
             </div>
           </div>
@@ -523,6 +556,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
   </div>
 </div>
 
+<!-- TOP BAR -->
 <div class="topbar">
   <div class="logo-area">
     <div class="logo-df-box">DF AUTOMOTIVE</div>
@@ -533,32 +567,12 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
   <div class="prog-container"><div class="prog-fill" id="pbar"></div></div>
 </div>
 
+<!-- KEYBOARD HINT -->
 <div class="khint" id="khint">
   <span class="k">←</span><span class="k">→</span> Nutzen Sie die Pfeiltasten
 </div>
 
-<button class="ai-chat-btn" onclick="toggleChat()">🤖</button>
-<div class="chat-window" id="chatWin">
-  <div class="chat-header">
-    <div class="chat-title">DF Automotive AI Assistant</div>
-    <button class="chat-close" onclick="toggleChat()">✕</button>
-  </div>
-  <div class="chat-messages" id="chatMsgs">
-    <div class="msg ai" id="welcomeMsg">Please select your preferred language / Bitte wählen Sie Ihre bevorzugte Sprache:</div>
-    <div class="lang-gate" id="langGate">
-      <button class="lang-btn" onclick="setLanguage('en')">🇬🇧 English</button>
-      <button class="lang-btn" onclick="setLanguage('de')">🇩🇪 Deutsch</button>
-    </div>
-  </div>
-  <div class="chat-input-area">
-    <input type="file" id="fileUploader" style="display:none;" onchange="simulateFahrzeugscheinUpload(this)">
-    <label for="fileUploader" class="chat-upload-label disabled" id="uploadLabelBtn">📎</label>
-    
-    <input type="text" class="chat-input" id="chatIn" placeholder="Select language first..." disabled onkeypress="handleKey(event)">
-    <button class="chat-send" id="chatSendBtn" onclick="sendMsg()" disabled>Send</button>
-  </div>
-</div>
-
+<!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <div class="section-dots" id="sdots">
     <button class="sdot active" onclick="go(0)"><span class="sdot-label">Start</span></button>
@@ -587,10 +601,7 @@ const khint = document.getElementById('khint');
 function go(n) {
   n = Math.max(0, Math.min(N-1, n));
   cur = n;
-  
-  // الحساب المطور الجديد لضمان ثبات التمرير والشرائح بنسبة 100%
   sw.style.transform = `translateX(-${cur * 25}%)`;
-  
   slides.forEach((s,i) => { s.scrollTop = 0; });
   dots.forEach((d,i) => d.classList.toggle('active', i===cur));
   slides.forEach((s,i) => { if(i===cur) setTimeout(()=>s.classList.add('in'),60); else s.classList.remove('in'); });
@@ -608,331 +619,6 @@ document.addEventListener('keydown', e=>{
 
 setTimeout(()=>khint.classList.add('gone'), 5000);
 go(0);
-
-/* AI CHAT LOGIC ENGINE - DYNAMIC CONVERSATION AND CONDITIONAL RATING FLOW */
-let currentLang = null;
-let selectedStars = 0;
-
-function toggleChat() {
-  document.getElementById('chatWin').classList.toggle('open');
-}
-
-function setLanguage(lang) {
-  currentLang = lang;
-  document.getElementById('langGate').style.display = 'none';
-  
-  const chatInput = document.getElementById('chatIn');
-  const chatBtn = document.getElementById('chatSendBtn');
-  const uploadBtn = document.getElementById('uploadLabelBtn');
-  
-  chatInput.disabled = false;
-  chatBtn.disabled = false;
-  uploadBtn.classList.remove('disabled');
-  
-  if(lang === 'en') {
-    document.getElementById('welcomeMsg').innerText = "System switched to English. 🇬🇧\n\nOptions:\n1. Type car model (e.g., 'Audi A5')\n2. Click 📎 to upload Fahrzeugschein\n3. Type 'comment' to test TikTok Auto-Reply Automation!";
-    chatInput.placeholder = "Type model, upload file or write 'comment'...";
-    document.getElementById('chatSendBtn').innerText = "Send";
-  } else {
-    document.getElementById('welcomeMsg').innerText = "System auf Deutsch umgestellt. 🇩🇪\n\nOptionen:\n1. Fahrzeugmodell eingeben (z. B. 'Audi A5')\n2. Auf 📎 klicken für Fahrzeugschein-Upload\n3. Schreiben Sie 'comment' für den TikTok-Kommentar-Test!";
-    chatInput.placeholder = "Modell eingeben oder 'comment' schreiben...";
-    document.getElementById('chatSendBtn').innerText = "Senden";
-  }
-}
-
-function handleKey(e) {
-  if(e.key === 'Enter') sendMsg();
-}
-
-function sendMsg() {
-  const input = document.getElementById('chatIn');
-  const text = input.value.trim();
-  if(!text) return;
-
-  removeOptionsBlock();
-
-  appendMessage(text, 'user');
-  input.value = '';
-
-  processAutomotiveQuery(text);
-}
-
-function simulateFahrzeugscheinUpload(inputEl) {
-  if (!inputEl.files || !inputEl.files[0]) return;
-  const fileName = inputEl.files[0].name;
-  
-  removeOptionsBlock();
-  
-  const uploadBubbleText = currentLang === 'en' ? `📎 Uploaded Document: ${fileName}` : `📎 Hochgeladenes Dokument: ${fileName}`;
-  appendMessage(uploadBubbleText, 'user');
-
-  appendTyping();
-  setTimeout(() => {
-    removeTyping();
-    const processingText = currentLang === 'en'
-      ? `⚙️ [AI OCR Engine] Scanning Fahrzeugschein structure... Reading field '2.1' (HSN) and field '2.2' (TSN)...`
-      : `⚙️ [AI OCR Engine] Scanne Fahrzeugschein-Struktur... Lese Feld '2.1' (HSN) und Feld '2.2' (TSN) aus...`;
-    appendMessage(processingText, 'system-search');
-
-    appendTyping();
-    setTimeout(() => {
-      removeTyping();
-      const detectedVehicle = "Audi A5 Sportback (HSN: 0588 / TSN: BHI)";
-      const reply = getCarModelSpecificResponse(detectedVehicle, 'audi');
-      appendMessage(reply, 'ai');
-
-      setTimeout(() => {
-        sendAutomationEfficiencyNotice();
-        setTimeout(appendFollowUpQuestion, 1200);
-      }, 1000);
-
-    }, 2000);
-  }, 1000);
-}
-
-function processAutomotiveQuery(text) {
-  const lowerText = text.toLowerCase();
-  
-  if (lowerText.includes('comment') || lowerText.includes('tag') || lowerText.includes('tiktok')) {
-    appendTyping();
-    setTimeout(() => {
-      removeTyping();
-      const infoText = currentLang === 'en'
-        ? `🎵 [TikTok Webhook Triggered] Simulating new user comment on @df.automotive video...`
-        : `🎵 [TikTok Webhook Ausgelöst] Simuliere neuen Nutzerkommentar auf @df.automotive Video...`;
-      appendMessage(infoText, 'system-search');
-      
-      appendTyping();
-      setTimeout(() => {
-        removeTyping();
-        let commentSim = "";
-        let botReply = "";
-        if(currentLang === 'en') {
-          commentSim = "👤 TikTok User Comment: \"Wow, do these BBS wheels fit on my Golf 8? How much?\"";
-          botReply = "🤖 [Automated Instant Reply]: \"Hey! Yes, they fit perfectly! Check out the exact fitment details and current pricing here: felgenshop.de/bbs-ch-r-golf8 🔧✨\"";
-        } else {
-          commentSim = "👤 TikTok-Nutzerkommentar: \"Wow, passen diese BBS-Felgen auf meinen Golf 8? Was kosten sie?\"";
-          botReply = "🤖 [Automated Instant Reply]: \"Hey! Ja, die passen perfekt. Alle Details und aktuellen Preise findest du direkt hier: felgenshop.de/bbs-ch-r-golf8 🔧✨\"";
-        }
-        appendMessage(commentSim, 'user');
-        setTimeout(() => {
-          appendMessage(botReply, 'ai');
-          setTimeout(appendFollowUpQuestion, 1200);
-        }, 1000);
-      }, 1500);
-    }, 500);
-    return;
-  }
-
-  const carBrands = ['audi', 'bmw', 'vw', 'volkswagen', 'golf', 'mercedes', 'tesla', 'porsche', 'ford', 'opel', 'toyota', 'hyundai'];
-  let matchedBrand = null;
-
-  carBrands.forEach(b => { if(lowerText.includes(b)) matchedBrand = b; });
-
-  if(matchedBrand || lowerText.includes('car') || lowerText.includes('fahrzeug') || lowerText.includes('modell')) {
-    appendTyping();
-    setTimeout(() => {
-      removeTyping();
-      const searchStatus = currentLang === 'en' 
-        ? `🔍 Accessing felgenshop.de API... Checking technical fitment data for: "${text}"...` 
-        : `🔍 Greife auf felgenshop.de API zu... Prüfe technische Kompatibilität für: "${text}"...`;
-      appendMessage(searchStatus, 'system-search');
-      
-      appendTyping();
-      setTimeout(() => {
-        removeTyping();
-        const reply = getCarModelSpecificResponse(text, matchedBrand);
-        appendMessage(reply, 'ai');
-        
-        setTimeout(() => {
-          sendAutomationEfficiencyNotice();
-          setTimeout(appendFollowUpQuestion, 1200);
-        }, 1000);
-      }, 1600);
-    }, 900);
-  } else {
-    appendTyping();
-    setTimeout(() => {
-      removeTyping();
-      const reply = getGeneralSystemResponse(lowerText);
-      appendMessage(reply, 'ai');
-      setTimeout(appendFollowUpQuestion, 1200);
-    }, 1100);
-  }
-}
-
-function appendMessage(text, sender) {
-  const container = document.getElementById('chatMsgs');
-  const el = document.createElement('div');
-  el.className = `msg ${sender}`;
-  el.innerText = text;
-  container.appendChild(el);
-  container.scrollTop = container.scrollHeight;
-}
-
-function appendTyping() {
-  const container = document.getElementById('chatMsgs');
-  const el = document.createElement('div');
-  el.className = 'msg ai';
-  el.id = 'typing-indicator';
-  el.innerHTML = '<div class="typing-dots"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>';
-  container.appendChild(el);
-  container.scrollTop = container.scrollHeight;
-}
-
-function removeTyping() {
-  const el = document.getElementById('typing-indicator');
-  if(el) el.remove();
-}
-
-function sendAutomationEfficiencyNotice() {
-  let notice = "";
-  if (currentLang === 'en') {
-    notice = "💡 [ROI Impact] By automating this check via photo upload instead of phone support, DF Automotive eliminates 90% of manual vehicle compatibility inquiries, saving thousands of customer support hours annually! 📈";
-  } else {
-    notice = "💡 [ROI Impact] Durch die Automatisierung dieser Abfrage per Foto-Upload statt Telefon-Support spart DF Automotive 90% der manuellen Kompatibilitäts-Anfragen und reduziert die Support-Kosten drastisch! 📈";
-  }
-  appendMessage(notice, 'ai');
-}
-
-function appendFollowUpQuestion() {
-  const questionText = currentLang === 'en' 
-    ? "Do you have any other questions or another vehicle to check? 🤔" 
-    : "Haben Sie noch weitere Fragen oder ein anderes Fahrzeug zu prüfen? 🤔";
-    
-  appendMessage(questionText, 'ai');
-  
-  const container = document.getElementById('chatMsgs');
-  const block = document.createElement('div');
-  block.className = 'chat-options-block';
-  block.id = 'live-options-block';
-  
-  const lblYes = currentLang === 'en' ? 'Yes / Continue' : 'Ja / Weiter';
-  const lblNo = currentLang === 'en' ? 'No / Finished' : 'Nein / Fertig';
-  
-  block.innerHTML = `
-    <button class="opt-btn" onclick="handleUserChoice(true)">${lblYes}</button>
-    <button class="opt-btn" onclick="handleUserChoice(false)">${lblNo}</button>
-  `;
-  container.appendChild(block);
-  container.scrollTop = container.scrollHeight;
-}
-
-function removeOptionsBlock() {
-  const block = document.getElementById('live-options-block');
-  if(block) block.remove();
-}
-
-function handleUserChoice(wantsMore) {
-  removeOptionsBlock();
-  
-  if (wantsMore) {
-    const userMsg = currentLang === 'en' ? "Yes, I have more questions." : "Ja, ich habe weitere Fragen.";
-    appendMessage(userMsg, 'user');
-    
-    appendTyping();
-    setTimeout(() => {
-      removeTyping();
-      const aiPrompt = currentLang === 'en'
-        ? "Sure! Please type your next question or attach another vehicle registration document (Fahrzeugschein) 📎"
-        : "Gerne! Bitte geben Sie Ihre nächste Frage ein oder laden Sie einen weiteren fahrzeugschein hoch 📎";
-      appendMessage(aiPrompt, 'ai');
-    }, 800);
-  } else {
-    const userMsg = currentLang === 'en' ? "No, thank you." : "Nein, danke. Ich bin fertig.";
-    appendMessage(userMsg, 'user');
-    
-    appendTyping();
-    setTimeout(() => {
-      removeTyping();
-      const thanksText = currentLang === 'en'
-        ? "Thank you for using DF Automotive AI support! Have a safe drive. 🏎️💨"
-        : "Vielen Dank, dass Sie den KI-Support von DF Automotive genutzt haben! Gute Fahrt. 🏎️💨";
-      appendMessage(thanksText, 'ai');
-      
-      setTimeout(appendRatingCard, 1000);
-    }, 800);
-  }
-}
-
-function appendRatingCard() {
-  const container = document.getElementById('chatMsgs');
-  const card = document.createElement('div');
-  card.className = 'rating-card';
-  card.id = 'live-rating-card';
-  
-  const titleText = currentLang === 'en' ? 'Rate your AI Experience:' : 'Bewerten Sie Ihren KI-Support:';
-  const placeholderText = currentLang === 'en' ? 'Leave a feedback (optional)...' : 'Feedback hinterlassen (optional)...';
-  const submitText = currentLang === 'en' ? 'Submit' : 'Absenden';
-
-  card.innerHTML = `
-    <div class="rating-title">${titleText}</div>
-    <div class="stars-container">
-      <button class="star-btn" onclick="rateStars(1)">★</button>
-      <button class="star-btn" onclick="rateStars(2)">★</button>
-      <button class="star-btn" onclick="rateStars(3)">★</button>
-      <button class="star-btn" onclick="rateStars(4)">★</button>
-      <button class="star-btn" onclick="rateStars(5)">★</button>
-    </div>
-    <textarea class="feedback-textarea" id="ratingText" placeholder="${placeholderText}"></textarea>
-    <button class="submit-rating-btn" onclick="submitFeedback()">${submitText}</button>
-  `;
-  container.appendChild(card);
-  container.scrollTop = container.scrollHeight;
-}
-
-function rateStars(num) {
-  selectedStars = num;
-  const stars = document.querySelectorAll('#live-rating-card .star-btn');
-  stars.forEach((s, idx) => {
-    s.classList.toggle('active', idx < num);
-  });
-}
-
-function submitFeedback() {
-  const card = document.getElementById('live-rating-card');
-  const successMessage = currentLang === 'en' 
-    ? `✅ Thank you for your feedback! (${selectedStars}/5 Stars saved)` 
-    : `✅ Vielen Dank für Ihr Feedback! (${selectedStars}/5 Sterne gespeichert)`;
-    
-  card.innerHTML = `<div class="rating-title" style="color:#2e7d32; text-align:center;">${successMessage}</div>`;
-}
-
-function getCarModelSpecificResponse(modelInput, brand) {
-  const formattedModel = modelInput.replace(/\b\w/g, c => c.toUpperCase());
-  
-  if (currentLang === 'en') {
-    if (modelInput.toLowerCase().includes('a5') || modelInput.toLowerCase().includes('audi')) {
-      return `✅ [Database Match] Exclusive options for **${formattedModel}** found:\n\nFor the ${formattedModel}, the ideal setup is 19" or 20" wheels. We highly recommend fitting **Rotiform LAS-R** or **BBS CH-R Satin Black** combined with 255/30 R20 performance tires. This configuration guarantees 100% mechanical fitment clearance in our Flensburg warehouse system without any body modifications. 🏎️`;
-    }
-    return `✅ [Database Match] Live specifications for **${formattedModel}** loaded:\n\nBased on your vehicle type, our system filters out exactly 18" to 20" wheel fitments. Recommended brands for this setup are **Borbet** or **Tomason** wheels wrapped in **Continental SportContact 7** tires. Fully certified by TÜV guidelines and available directly on felgenshop.de! 🔧`;
-  } else {
-    if (modelInput.toLowerCase().includes('a5') || modelInput.toLowerCase().includes('audi')) {
-      return `✅ [Datenbank-Treffer] Exklusive Optionen für **${formattedModel}** geladen:\n\nFür das ${formattedModel} ist das ideale Setup 19 oder 20 Zoll Felgen. Wir empfehlen die **Rotiform LAS-R** oder **BBS CH-R Satin Black** in Verbindung mit High-Performance-Reifen der Dimension 255/30 R20. Garantiert 100% Passgenauigkeit im System ohne Karosseriearbeiten! 🏎️`;
-    }
-    return `✅ [Datenbank-Treffer] Spezifische Live-Daten für **${formattedModel}** abgerufen:\n\nFür dieses spezifische Modell filtert das felgenshop.de System perfekte Rad-Reifen-Kombinationen von 18 bis 20 Zoll heraus. Höchste Kundenzufriedenheit erzielen hier **Borbet** oder **Tomason** Felgen, bestückt mit **Continental SportContact 7** Reifen. Inklusive TÜV-Gutachten! 🔧`;
-  }
-}
-
-function getGeneralSystemResponse(q) {
-  if (currentLang === 'en') {
-    if(q.includes('hallo') || q.includes('hi') || q.includes('hello')) {
-      return "Hello! I am Yamen's AI simulator. Give me any specific car model (like 'Audi A5'), or upload a Fahrzeugschein to test the optical scanner! 🚀";
-    }
-    if(q.includes('yamen')) {
-      return "Yamen developed this entire digital interactive pitch presentation. He is fully prepared to deploy these automation architectures as a Working Student (Werkstudent) at DF Automotive! 🧠";
-    }
-    return "Great question! That is a precise workflow that can be scaled using automated nodes, reducing manual labor and saving up to 80% of repetitive task times. ⚙️";
-  } else {
-    if(q.includes('hallo') || q.includes('hi') || q.includes('moin')) {
-      return "Moin! Ich bin Yamens KI-Simulator. Geben Sie mir ein konkretes Automodell (z. B. 'Audi A5') oder laden Sie einen Fahrzeugschein hoch, um den OCR-Scanner zu testen! 🚀";
-    }
-    if(q.includes('yamen')) {
-      return "Yamen hat diese interaktive Präsentation entwickelt. Er ist bereit, diese Automatisierungs-Workflows als Werkstudent direkt bei DF Automotive in die Praxis umzusetzen! 🧠";
-    }
-    return "Interessante Frage! Genau solche Workflows lassen sich über automatisierte n8n-Nodes abbilden, um manuelle Fehler zu minimieren und wertvolle Arbeitszeit einzusparen. ⚙️";
-  }
-}
 </script>
 </body>
 </html>
