@@ -168,6 +168,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 /* ─── S2: PROZESS ─── */
 #s2 { background: var(--off); }
 .psteps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 32px; }
+.psteps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 32px; }
 .pstep { padding: 22px 16px; border: 1px solid var(--border); border-radius: 8px; background: var(--white); box-shadow: var(--shadow); }
 .pstep-n { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2rem; color: var(--mid); line-height: 1; margin-bottom: 8px; display: block; }
 .pstep-ic { font-size: 1.4rem; margin-bottom: 8px; }
@@ -221,6 +222,9 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 .vari.hot { border-color: var(--red); background: var(--red-bg); color: var(--dark); }
 .vari-lbl { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 0.68rem; text-transform: uppercase; color: var(--red); display: block; margin-bottom: 2px; }
 .vari-lbl.m { color: var(--muted); }
+
+/* LIVE TRENDING BADGE STYLE */
+.trend-sync-badge { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; padding: 4px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; }
 
 /* ─── KEYBOARD HINT ─── */
 .khint { position: fixed; bottom: 90px; right: 48px; z-index: 180; background: rgba(255, 255, 255, 0.9); border: 1px solid var(--border); border-radius: 6px; padding: 8px 16px; font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px); }
@@ -310,7 +314,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 .tdot:nth-child(2) { animation-delay: -0.16s; }
 @keyframes tBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
-/* ─── RESPONSIVE STYLES (UPDATED FOR SCROLL PROBLEM) ─── */
+/* ─── RESPONSIVE STYLES ─── */
 @media (max-width: 860px) {
   .topbar, .bottom-nav { padding: 0 20px; }
   .slide-inner { padding: 90px 20px 180px !important; }
@@ -358,7 +362,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
       </div>
       <div class="hero-cards fu">
         <div class="hcard"><div class="hcard-ic">🎵</div><div><div class="hcard-t">TikTok Content automatisieren</div><div class="hcard-d">Neues Produkt → KI generiert Caption, Hook & Hashtags in Sekunden</div></div></div>
-        <div class="hcard"><div class="hcard-ic">🛒</div><div><div class="hcard-t">SEO-Produkttexte skalieren</div><div class="hcard-d">500+ Produkte mit einzigartigen Beschreibungen in einer ساعت</div></div></div>
+        <div class="hcard"><div class="hcard-ic">🛒</div><div><div class="hcard-t">SEO-Produkttexte skalieren</div><div class="hcard-d">500+ Produkte mit einzigartigen Beschreibungen in einer Stunde</div></div></div>
         <div class="hcard"><div class="hcard-ic">💬</div><div><div class="hcard-t">Kundenservice mit KI</div><div class="hcard-d">Kompatibilitätsfragen automatisch beantworten — 24/7</div></div></div>
         <div class="hcard"><div class="hcard-ic">📊</div><div><div class="hcard-t">Daten & Reporting</div><div class="hcard-d">Automatische Berichte, Preismonitoring & Marktanalyse</div></div></div>
       </div>
@@ -499,7 +503,11 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
           <div class="dblock">
             <div class="dblock-t">📤 Output <span class="dpill">3 Varianten</span></div>
             <div class="variants">
-              <div class="vari hot"><span class="vari-lbl">A — Hype</span>"Diese Felgen machen deinen Golf zum Hingucker 👀 Nur noch 3 Stück auf Lager!"</div>
+              <div class="vari hot">
+                <span class="vari-lbl">A — Hype</span>"Diese Felgen machen deinen Golf zum Hingucker 👀 Nur noch 3 Stück auf Lager!"
+                <br>
+                <div class="trend-sync-badge">🔥 TikTok Trends Live-Synced: #Tuning #CarTikTok #Felgen2026</div>
+              </div>
               <div class="vari"><span class="vari-lbl m">B — Info</span>"BBS CH-R 18 Zoll Satin Black — jetzt neu. Passt auf Golf &amp; A3 🔧"</div>
               <div class="vari"><span class="vari-lbl m">C — Frage</span>"Welche Farbe für deinen VW? 🤔 Wir haben die Antwort in Flensburg."</div>
             </div>
@@ -580,7 +588,7 @@ document.addEventListener('keydown', e=>{
 setTimeout(()=>khint.classList.add('gone'), 5000);
 go(0);
 
-/* AI CHAT LOGIC ENGINE - FULL OCR WITH FEEDBACK STARS SYSTEM */
+/* AI CHAT LOGIC ENGINE - UPDATED WITH TIKTOK COMMENT AUTOMATION */
 let currentLang = null;
 let selectedStars = 0;
 
@@ -601,12 +609,12 @@ function setLanguage(lang) {
   uploadBtn.classList.remove('disabled');
   
   if(lang === 'en') {
-    document.getElementById('welcomeMsg').innerText = "System switched to English. 🇬🇧\n\nYou can type your car model (e.g. 'Audi A5') OR click the attachment icon 📎 to upload a photo of your vehicle registration document (Fahrzeugschein) for instant automated AI verification!";
-    chatInput.placeholder = "Type model or upload Fahrzeugschein...";
+    document.getElementById('welcomeMsg').innerText = "System switched to English. 🇬🇧\n\nOptions:\n1. Type car model (e.g., 'Audi A5')\n2. Click 📎 to upload Fahrzeugschein\n3. Type 'comment' to test TikTok Auto-Reply Automation!";
+    chatInput.placeholder = "Type model, upload file or write 'comment'...";
     document.getElementById('chatSendBtn').innerText = "Send";
   } else {
-    document.getElementById('welcomeMsg').innerText = "System auf Deutsch umgestellt. 🇩🇪\n\nSie können Ihr Fahrzeugmodell eingeben (z. B. 'Audi A5') ODER auf die Büroklammer 📎 klicken, um ein Foto Ihres Fahrzeugscheins hochzuladen. Die KI analysiert die Daten sofort!";
-    chatInput.placeholder = "Modell eingeben oder Fahrzeugschein hochladen...";
+    document.getElementById('welcomeMsg').innerText = "System auf Deutsch umgestellt. 🇩🇪\n\nOptionen:\n1. Fahrzeugmodell eingeben (z. B. 'Audi A5')\n2. Auf 📎 klicken für Fahrzeugschein-Upload\n3. Schreiben Sie 'comment' für den TikTok-Kommentar-Test!";
+    chatInput.placeholder = "Modell eingeben oder 'comment' schreiben...";
     document.getElementById('chatSendBtn').innerText = "Senden";
   }
 }
@@ -650,7 +658,6 @@ function simulateFahrzeugscheinUpload(inputEl) {
 
       setTimeout(() => {
         sendAutomationEfficiencyNotice();
-        // TRIGGER RATING SYSTEM FEEDBACK CARD
         setTimeout(appendRatingCard, 1500);
       }, 1200);
 
@@ -660,6 +667,39 @@ function simulateFahrzeugscheinUpload(inputEl) {
 
 function processAutomotiveQuery(text) {
   const lowerText = text.toLowerCase();
+  
+  // TIKTOK COMMENT AUTOMATION INTERACTION
+  if (lowerText.includes('comment') || lowerText.includes('تعليق') || lowerText.includes('tiktok')) {
+    appendTyping();
+    setTimeout(() => {
+      removeTyping();
+      const infoText = currentLang === 'en'
+        ? `🎵 [TikTok Webhook Triggered] Simulating new user comment on @df.automotive video...`
+        : `🎵 [TikTok Webhook Ausgelöst] Simuliere neuen Nutzerkommentar auf @df.automotive Video...`;
+      appendMessage(infoText, 'system-search');
+      
+      appendTyping();
+      setTimeout(() => {
+        removeTyping();
+        let commentSim = "";
+        let botReply = "";
+        if(currentLang === 'en') {
+          commentSim = "👤 TikTok User Comment: \"Wow, do these BBS wheels fit on my Golf 8? How much?\"";
+          botReply = "🤖 [Automated Instant Reply]: \"Hey! Yes, they fit perfectly! Check out the exact fitment details and current pricing here: felgenshop.de/bbs-ch-r-golf8 🔧✨\"";
+        } else {
+          commentSim = "👤 TikTok-Nutzerkommentar: \"Wow, passen diese BBS-Felgen auf meinen Golf 8? Was kosten sie?\"";
+          botReply = "🤖 [Automated Instant Reply]: \"Hey! Ja, die passen perfekt. Alle Details und aktuellen Preise findest du direkt hier: felgenshop.de/bbs-ch-r-golf8 🔧✨\"";
+        }
+        appendMessage(commentSim, 'user');
+        setTimeout(() => {
+          appendMessage(botReply, 'ai');
+          setTimeout(appendRatingCard, 1500);
+        }, 1000);
+      }, 1500);
+    }, 500);
+    return;
+  }
+
   const carBrands = ['audi', 'bmw', 'vw', 'volkswagen', 'golf', 'mercedes', 'tesla', 'porsche', 'ford', 'opel', 'toyota', 'hyundai'];
   let matchedBrand = null;
 
@@ -682,7 +722,6 @@ function processAutomotiveQuery(text) {
         
         setTimeout(() => {
           sendAutomationEfficiencyNotice();
-          // TRIGGER RATING SYSTEM FEEDBACK CARD
           setTimeout(appendRatingCard, 1500);
         }, 1200);
       }, 1600);
@@ -693,7 +732,6 @@ function processAutomotiveQuery(text) {
       removeTyping();
       const reply = getGeneralSystemResponse(lowerText);
       appendMessage(reply, 'ai');
-      // TRIGGER RATING SYSTEM FEEDBACK CARD EVEN IN GENERAL QUESTIONS
       setTimeout(appendRatingCard, 1500);
     }, 1100);
   }
@@ -733,7 +771,6 @@ function sendAutomationEfficiencyNotice() {
   appendMessage(notice, 'ai');
 }
 
-/* INTERACTIVE STARS RATING DOM GENERATION */
 function appendRatingCard() {
   const container = document.getElementById('chatMsgs');
   const card = document.createElement('div');
@@ -770,8 +807,6 @@ function rateStars(num) {
 
 function submitFeedback() {
   const card = document.getElementById('live-rating-card');
-  const text = document.getElementById('ratingText').value.trim();
-  
   const successMessage = currentLang === 'en' 
     ? `✅ Thank you for your feedback! (${selectedStars}/5 Stars saved)` 
     : `✅ Vielen Dank für Ihr Feedback! (${selectedStars}/5 Sterne gespeichert)`;
@@ -800,9 +835,6 @@ function getGeneralSystemResponse(q) {
     if(q.includes('hallo') || q.includes('hi') || q.includes('hello')) {
       return "Hello! I am Yamen's AI simulator. Give me any specific car model (like 'Audi A5'), or upload a Fahrzeugschein to test the optical scanner! 🚀";
     }
-    if(q.includes('tiktok') || q.includes('social') || q.includes('content')) {
-      return "By integrating n8n with OpenAI, Yamen can automate social media generation. A new alloy wheel added to the shop database automatically triggers the generation of 3 localized TikTok captions and hashtags within 1.2 seconds! 🎵";
-    }
     if(q.includes('yamen')) {
       return "Yamen developed this entire digital interactive pitch presentation. He is fully prepared to deploy these automation architectures as a Working Student (Werkstudent) at DF Automotive! 🧠";
     }
@@ -810,9 +842,6 @@ function getGeneralSystemResponse(q) {
   } else {
     if(q.includes('hallo') || q.includes('hi') || q.includes('moin')) {
       return "Moin! Ich bin Yamens KI-Simulator. Geben Sie mir ein konkretes Automodell (z. B. 'Audi A5') oder laden Sie einen Fahrzeugschein hoch, um den OCR-Scanner zu testen! 🚀";
-    }
-    if(q.includes('tiktok') || q.includes('social')) {
-      return "Durch die Verknüpfung von n8n und OpenAI kann Yamen Social-Media-Content automatisieren. Eine neue Felge im Shop generiert in 1,2 Sekunden vollautomatisch passende TikTok-Captions und Hashtags! 🎵";
     }
     if(q.includes('yamen')) {
       return "Yamen hat diese interaktive Präsentation entwickelt. Er ist bereit, diese Automatisierungs-Workflows als Werkstudent direkt bei DF Automotive in die Praxis umzusetzen! 🧠";
