@@ -270,6 +270,17 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 .msg.user { background: var(--red); color: white; align-self: flex-end; border-top-right-radius: 2px; }
 .msg.system-search { background: rgba(0, 86, 179, 0.06); color: #0056b3; align-self: center; text-align: center; font-size: 0.78rem; border: 1px dashed rgba(0, 86, 179, 0.2); font-weight: 600; width: 95%; max-width: 95%; border-radius: 6px; padding: 8px; }
 
+/* Interactive Rating Card Style */
+.rating-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px; width: 100%; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow); margin-top: 4px; }
+.rating-title { font-weight: 700; font-size: 0.85rem; color: var(--dark); }
+.stars-container { display: flex; gap: 6px; justify-content: center; margin: 4px 0; }
+.star-btn { font-size: 1.5rem; color: #ccc; cursor: pointer; background: none; border: none; transition: color 0.2s; }
+.star-btn.active, .star-btn:hover { color: #ffca28; text-shadow: 0 0 8px rgba(255,202,40,0.4); }
+.feedback-textarea { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 8px; font-size: 0.8rem; resize: none; outline: none; height: 50px; font-family: inherit; }
+.feedback-textarea:focus { border-color: var(--red); }
+.submit-rating-btn { background: var(--dark); color: white; border: none; padding: 6px 12px; font-size: 0.8rem; font-weight: 700; border-radius: 4px; cursor: pointer; align-self: flex-end; }
+.submit-rating-btn:hover { background: var(--red); }
+
 /* Language Selector Area */
 .lang-gate { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; width: 100%; }
 .lang-btn { background: var(--white); border: 1px solid var(--border); padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 700; font-family: 'Barlow', sans-serif; text-align: left; transition: all 0.2s; color: var(--dark); }
@@ -302,10 +313,7 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 /* ─── RESPONSIVE STYLES (UPDATED FOR SCROLL PROBLEM) ─── */
 @media (max-width: 860px) {
   .topbar, .bottom-nav { padding: 0 20px; }
-  
-  /* الحل المعتمد: رفع مساحة الأمان السفلية لـ 180px لحل مشكلة السكرول على الجوال نهائياً */
   .slide-inner { padding: 90px 20px 180px !important; }
-  
   #s1 .slide-inner { grid-template-columns: 1fr; gap: 30px; }
   .hero-cards { display: none; }
   .psteps { grid-template-columns: 1fr; gap: 10px; }
@@ -320,7 +328,6 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
   <div class="logo-area">
     <div class="logo-df-box">DF AUTOMOTIVE</div>
@@ -331,15 +338,12 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
   <div class="prog-container"><div class="prog-fill" id="pbar"></div></div>
 </div>
 
-<!-- KEYBOARD HINT -->
 <div class="khint" id="khint">
   <span class="k">←</span><span class="k">→</span> Nutzen Sie die Pfeiltasten
 </div>
 
-<!-- SLIDES WRAPPER -->
 <div class="slides-wrapper" id="sw">
 
-  <!-- S1: HERO -->
   <div class="slide" id="s1">
     <div class="slide-inner">
       <div>
@@ -354,14 +358,13 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
       </div>
       <div class="hero-cards fu">
         <div class="hcard"><div class="hcard-ic">🎵</div><div><div class="hcard-t">TikTok Content automatisieren</div><div class="hcard-d">Neues Produkt → KI generiert Caption, Hook & Hashtags in Sekunden</div></div></div>
-        <div class="hcard"><div class="hcard-ic">🛒</div><div><div class="hcard-t">SEO-Produkttexte skalieren</div><div class="hcard-d">500+ Produkte mit einzigartigen Beschreibungen in einer Stunde</div></div></div>
+        <div class="hcard"><div class="hcard-ic">🛒</div><div><div class="hcard-t">SEO-Produkttexte skalieren</div><div class="hcard-d">500+ Produkte mit einzigartigen Beschreibungen in einer ساعت</div></div></div>
         <div class="hcard"><div class="hcard-ic">💬</div><div><div class="hcard-t">Kundenservice mit KI</div><div class="hcard-d">Kompatibilitätsfragen automatisch beantworten — 24/7</div></div></div>
         <div class="hcard"><div class="hcard-ic">📊</div><div><div class="hcard-t">Daten & Reporting</div><div class="hcard-d">Automatische Berichte, Preismonitoring & Marktanalyse</div></div></div>
       </div>
     </div>
   </div>
 
-  <!-- S2: PROZESS -->
   <div class="slide" id="s2">
     <div class="slide-inner">
       <div class="slide-tag fu">Schritt für Schritt</div>
@@ -407,7 +410,6 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
     </div>
   </div>
 
-  <!-- S3: USE CASES -->
   <div class="slide" id="s3">
     <div class="slide-inner">
       <div class="slide-tag fu">Konkrete Ideen</div>
@@ -453,7 +455,6 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
     </div>
   </div>
 
-  <!-- S4: DEMO -->
   <div class="slide" id="s4">
     <div class="slide-inner">
       <div class="slide-tag fu">Live Beispiel</div>
@@ -510,7 +511,6 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
 
 </div>
 
-<!-- AI CHAT SYSTEM INTERFACE -->
 <button class="ai-chat-btn" onclick="toggleChat()">🤖</button>
 <div class="chat-window" id="chatWin">
   <div class="chat-header">
@@ -533,7 +533,6 @@ h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
   </div>
 </div>
 
-<!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <div class="section-dots" id="sdots">
     <button class="sdot active" onclick="go(0)"><span class="sdot-label">Start</span></button>
@@ -581,8 +580,9 @@ document.addEventListener('keydown', e=>{
 setTimeout(()=>khint.classList.add('gone'), 5000);
 go(0);
 
-/* AI CHAT LOGIC ENGINE - FAHRZEUGSCHEIN OCR SCANNING SIMULATOR */
+/* AI CHAT LOGIC ENGINE - FULL OCR WITH FEEDBACK STARS SYSTEM */
 let currentLang = null;
+let selectedStars = 0;
 
 function toggleChat() {
   document.getElementById('chatWin').classList.toggle('open');
@@ -630,9 +630,7 @@ function simulateFahrzeugscheinUpload(inputEl) {
   if (!inputEl.files || !inputEl.files[0]) return;
   const fileName = inputEl.files[0].name;
   
-  const uploadBubbleText = currentLang === 'en' 
-    ? `📎 Uploaded Document: ${fileName}` 
-    : `📎 Hochgeladenes Dokument: ${fileName}`;
+  const uploadBubbleText = currentLang === 'en' ? `📎 Uploaded Document: ${fileName}` : `📎 Hochgeladenes Dokument: ${fileName}`;
   appendMessage(uploadBubbleText, 'user');
 
   appendTyping();
@@ -652,6 +650,8 @@ function simulateFahrzeugscheinUpload(inputEl) {
 
       setTimeout(() => {
         sendAutomationEfficiencyNotice();
+        // TRIGGER RATING SYSTEM FEEDBACK CARD
+        setTimeout(appendRatingCard, 1500);
       }, 1200);
 
     }, 2000);
@@ -682,6 +682,8 @@ function processAutomotiveQuery(text) {
         
         setTimeout(() => {
           sendAutomationEfficiencyNotice();
+          // TRIGGER RATING SYSTEM FEEDBACK CARD
+          setTimeout(appendRatingCard, 1500);
         }, 1200);
       }, 1600);
     }, 900);
@@ -691,6 +693,8 @@ function processAutomotiveQuery(text) {
       removeTyping();
       const reply = getGeneralSystemResponse(lowerText);
       appendMessage(reply, 'ai');
+      // TRIGGER RATING SYSTEM FEEDBACK CARD EVEN IN GENERAL QUESTIONS
+      setTimeout(appendRatingCard, 1500);
     }, 1100);
   }
 }
@@ -727,6 +731,52 @@ function sendAutomationEfficiencyNotice() {
     notice = "💡 [ROI Impact] Durch die Automatisierung dieser Abfrage per Foto-Upload statt Telefon-Support spart DF Automotive 90% der manuellen Kompatibilitäts-Anfragen und reduziert die Support-Kosten drastisch! 📈";
   }
   appendMessage(notice, 'ai');
+}
+
+/* INTERACTIVE STARS RATING DOM GENERATION */
+function appendRatingCard() {
+  const container = document.getElementById('chatMsgs');
+  const card = document.createElement('div');
+  card.className = 'rating-card';
+  card.id = 'live-rating-card';
+  
+  const titleText = currentLang === 'en' ? 'Rate your AI Experience:' : 'Bewerten Sie Ihren KI-Support:';
+  const placeholderText = currentLang === 'en' ? 'Leave a feedback (optional)...' : 'Feedback hinterlassen (optional)...';
+  const submitText = currentLang === 'en' ? 'Submit' : 'Absenden';
+
+  card.innerHTML = `
+    <div class="rating-title">${titleText}</div>
+    <div class="stars-container">
+      <button class="star-btn" onclick="rateStars(1)">★</button>
+      <button class="star-btn" onclick="rateStars(2)">★</button>
+      <button class="star-btn" onclick="rateStars(3)">★</button>
+      <button class="star-btn" onclick="rateStars(4)">★</button>
+      <button class="star-btn" onclick="rateStars(5)">★</button>
+    </div>
+    <textarea class="feedback-textarea" id="ratingText" placeholder="${placeholderText}"></textarea>
+    <button class="submit-rating-btn" onclick="submitFeedback()">${submitText}</button>
+  `;
+  container.appendChild(card);
+  container.scrollTop = container.scrollHeight;
+}
+
+function rateStars(num) {
+  selectedStars = num;
+  const stars = document.querySelectorAll('#live-rating-card .star-btn');
+  stars.forEach((s, idx) => {
+    s.classList.toggle('active', idx < num);
+  });
+}
+
+function submitFeedback() {
+  const card = document.getElementById('live-rating-card');
+  const text = document.getElementById('ratingText').value.trim();
+  
+  const successMessage = currentLang === 'en' 
+    ? `✅ Thank you for your feedback! (${selectedStars}/5 Stars saved)` 
+    : `✅ Vielen Dank für Ihr Feedback! (${selectedStars}/5 Sterne gespeichert)`;
+    
+  card.innerHTML = `<div class="rating-title" style="color:#2e7d32; text-align:center;">${successMessage}</div>`;
 }
 
 function getCarModelSpecificResponse(modelInput, brand) {
